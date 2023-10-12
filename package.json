@@ -1,0 +1,53 @@
+{
+  "name": "hack_assembler",
+  "version": "0.1.0",
+  "description": "This is an assembler for the hack machine language. Project 6 in https://www.nand2tetris.org/",
+  "main": "lib/index.js",
+  "bin": {
+    "hack-assembler": "lib/index.js"
+  },
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
+    "build": "rm -rf ./lib && tsc",
+    "bin": "npm run build && node lib/index.js"
+  },
+  "keywords": [
+    "hack",
+    "assembler",
+    "nand2tetris"
+  ],
+  "author": "Stefan Waldhauser",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "@types/node": "^20.8.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "dependencies": {
+    "@commander-js/extra-typings": "^11.0.0",
+    "@types/lodash": "^4.14.199",
+    "@types/progress": "^2.0.5",
+    "commander": "^11.0.0",
+    "lodash": "^4.17.21",
+    "progress": "^2.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  }
+}
