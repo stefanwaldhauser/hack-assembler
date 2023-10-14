@@ -6,6 +6,7 @@ import {
   parseDest,
   parseComp,
   parseJump,
+  parseSymbol,
 } from "./parser";
 
 describe("clean", () => {
@@ -101,5 +102,19 @@ describe("parseJump", () => {
     const input = "D=M+1";
     const result = parseJump(input);
     assert.strictEqual(result, null);
+  });
+});
+
+describe("parseSymbol", () => {
+  it("should parse the symbol of a valid A-instruction", () => {
+    const input = "@123";
+    const result = parseSymbol(input);
+    assert.strictEqual(result, "123");
+  });
+
+  it("should parse the symbol of a valid L-instruction", () => {
+    const input = "(LOOP)";
+    const result = parseSymbol(input);
+    assert.strictEqual(result, "LOOP");
   });
 });

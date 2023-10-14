@@ -38,6 +38,22 @@ export const instructionType = (instruction: string): INSTRUCTION_TYPE => {
   }
 };
 
+export const parseSymbol = (aOrLInstruction: string): string => {
+  const cleanedInstruction = clean(aOrLInstruction);
+  const type = instructionType(cleanedInstruction);
+  if (type === INSTRUCTION_TYPE.A_INSTRUCTION) {
+    const atIndex = cleanedInstruction.indexOf("@");
+    return cleanedInstruction.substring(atIndex + 1);
+  } else {
+    const openBracketIndex = cleanedInstruction.indexOf("(");
+    const closedBracketIndex = cleanedInstruction.indexOf(")");
+    return cleanedInstruction.substring(
+      openBracketIndex + 1,
+      closedBracketIndex,
+    );
+  }
+};
+
 export const parseDest = (cInstruction: string): DestMnemonics | null => {
   const cleanedInstruction = clean(cInstruction);
   const equalsIndex = cleanedInstruction.indexOf("=");
