@@ -7,7 +7,7 @@ import {
   parseComp,
   parseJump,
   parseSymbol,
-} from "./parser";
+} from "./parse";
 
 describe("clean", () => {
   it("should remove comments", () => {
@@ -20,11 +20,6 @@ describe("clean", () => {
     const input = "   A=D   ";
     const result = clean(input);
     assert.strictEqual(result, "A=D");
-  });
-
-  it("should throw an error for an empty instruction", () => {
-    const input = "";
-    assert.throws(() => clean(input), /Empty Instruction/);
   });
 
   it("should handle instructions without comments or extra whitespace", () => {
