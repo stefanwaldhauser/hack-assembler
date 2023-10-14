@@ -8,11 +8,15 @@ import { Readable, Writable } from "stream";
 export const assemble = async (
   input: Readable,
   output: Writable,
+  symbolTable: Map<string, number>,
 ): Promise<void> => {
   const rl = readline.createInterface({
     input: input,
     crlfDelay: Infinity,
   });
+  const variables = {
+    nextFreeAddress: 16,
+  };
 
   return new Promise((resolve, reject) => {
     const writeStream = output;
@@ -21,11 +25,17 @@ export const assemble = async (
       const assemblyInstruction = parser.clean(line);
       if (assemblyInstruction.length !== 0) {
         const instructionType = parser.instructionType(assemblyInstruction);
-        const machineInstruction =
-          instructionType === parser.INSTRUCTION_TYPE.C_INSTRUCTION
-            ? assembleCInstruction(assemblyInstruction)
-            : assembleAInstruction(assemblyInstruction);
-        writeStream.write(`${machineInstruction}\n`);
+        if (instructionType !== parser.INSTRUCTION_TYPE.L_INSTRUCTION) {
+          const machineInstruction =
+            instructionType === parser.INSTRUCTION_TYPE.C_INSTRUCTION
+              ? assembleCInstruction(assemblyInstruction)
+              : assembleAInstruction(
+                  assemblyInstruction,
+                  symbolTable,
+                  variables,
+                );
+          writeStream.write(`${machineInstruction}\n`);
+        }
       }
     });
 
@@ -54,7 +64,20 @@ export const assembleCInstruction = (
 
 export const assembleAInstruction = (
   instruction: string,
+  symbolTable: Map<string, number>,
+  variableStore: {
+    nextFreeAddress: number;
+  },
 ): MachineInstruction => {
-  const decimalAddress = Number.parseInt(parser.parseSymbol(instruction));
-  return `0${intTo15BitBinary(decimalAddress)}`;
+  const symbol = parser.parseSymbol(instruction);
+  if (!isNaN(parseInt(symbol))) {
+    return `0${intTo15BitBinary(parseInt(symbol))}`;
+  }
+  const isNewVariable = !symbolTable.has(symbol);
+  if (isNewVariable) {
+    symbolTable.set(symbol, variableStore.nextFreeAddress);
+    variableStore.nextFreeAddress = variableStore.nextFreeAddress + 1;
+  }
+
+  return `0${intTo15BitBinary(symbolTable.get(symbol)!)}`;
 };

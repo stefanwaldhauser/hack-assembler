@@ -2,6 +2,7 @@
 import fs from "fs";
 import { Command } from "commander";
 import { assemble } from "./assemble";
+import { createSymbolTable } from "./symbol-table";
 
 async function run() {
   const program = new Command()
@@ -11,9 +12,12 @@ async function run() {
     .requiredOption("-o, --outputFile <path>");
   program.parse();
   const { inputFile, outputFile } = program.opts();
-  const input = fs.createReadStream(inputFile);
-  const output = fs.createWriteStream(outputFile, { flags: "w" });
-  await assemble(input, output);
+  const symbolTable = await createSymbolTable(fs.createReadStream(inputFile));
+  await assemble(
+    fs.createReadStream(inputFile),
+    fs.createWriteStream(outputFile, { flags: "w" }),
+    symbolTable,
+  );
 }
 
 run();

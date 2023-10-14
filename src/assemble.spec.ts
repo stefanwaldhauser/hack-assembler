@@ -23,7 +23,7 @@ describe("assemble function", () => {
     const input = fs.createReadStream("./input.asm");
     const output = fs.createWriteStream("./output.hack", { flags: "w" });
 
-    await assemble(input, output);
+    await assemble(input, output, new Map());
 
     const outputFileContent = fs
       .readFileSync("./output.hack")
@@ -36,7 +36,7 @@ describe("assemble function", () => {
 
 describe("assembleCInstruction", () => {
   it("should assemble a C instruction correctly", () => {
-    const assemblyInstruction = "0;JMP"; // Replace with your test instruction
+    const assemblyInstruction = "0;JMP";
     const machineInstruction = assembleCInstruction(assemblyInstruction);
     const expectedMachineInstruction = "1110101010000111";
 
@@ -47,7 +47,13 @@ describe("assembleCInstruction", () => {
 describe("assembleAInstruction", () => {
   it("should assemble an A instruction correctly", () => {
     const assemblyInstruction = "@123";
-    const machineInstruction = assembleAInstruction(assemblyInstruction);
+    const machineInstruction = assembleAInstruction(
+      assemblyInstruction,
+      new Map(),
+      {
+        nextFreeAddress: 16,
+      },
+    );
 
     const expectedMachineInstruction = "0000000001111011";
     equal(machineInstruction, expectedMachineInstruction);
