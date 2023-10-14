@@ -34,3 +34,11 @@ type MCompMnemonics =
 export type CompMnemonics = ACompMnemonics | MCompMnemonics;
 export type CompBinaryCode =
   `${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}`;
+
+// 15 bit
+export type BinaryAddress =
+  `${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}`;
+
+// 16 bit
+export type MachineInstruction =
+  `${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}${Binary}`;
