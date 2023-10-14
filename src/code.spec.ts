@@ -7,9 +7,9 @@ import {
   CompMnemonics,
   CompBinaryCode,
 } from "./types";
-import { comp, dest, jump } from "./code";
+import { codeComp, codeDest, codeJump } from "./code";
 
-describe("dest", () => {
+describe("codeDest", () => {
   type inputOutput = [DestMnemonics | null, DestBinaryCode];
   const tests: inputOutput[] = [
     [null, "000"],
@@ -24,12 +24,12 @@ describe("dest", () => {
 
   tests.forEach(([mnemonic, binaryCode]) => {
     it(`should translate mnemonic ${mnemonic} into binary code ${binaryCode}`, () => {
-      equal(dest(mnemonic), binaryCode);
+      equal(codeDest(mnemonic), binaryCode);
     });
   });
 });
 
-describe("jump", () => {
+describe("codeJump", () => {
   type inputOutput = [JumpMnemonics | null, JumpBinaryCode];
   const tests: inputOutput[] = [
     [null, "000"],
@@ -44,12 +44,12 @@ describe("jump", () => {
 
   tests.forEach(([mnemonic, binaryCode]) => {
     it(`should translate mnemonic ${mnemonic} into binary code ${binaryCode}`, () => {
-      equal(jump(mnemonic), binaryCode);
+      equal(codeJump(mnemonic), binaryCode);
     });
   });
 });
 
-describe("comp", () => {
+describe("codeComp", () => {
   type inputOutput = [CompMnemonics, CompBinaryCode];
   const tests: inputOutput[] = [
     ["0", "0101010"],
@@ -84,7 +84,7 @@ describe("comp", () => {
 
   tests.forEach(([mnemonic, binaryCode]) => {
     it(`should translate mnemonic ${mnemonic} into binary code ${binaryCode}`, () => {
-      equal(comp(mnemonic), binaryCode);
+      equal(codeComp(mnemonic), binaryCode);
     });
   });
 });

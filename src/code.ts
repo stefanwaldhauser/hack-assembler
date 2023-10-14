@@ -8,7 +8,7 @@ import {
 } from "./types";
 import { toBinary } from "./helpers";
 
-export const dest = (mnemonic: DestMnemonics | null): DestBinaryCode => {
+export const codeDest = (mnemonic: DestMnemonics | null): DestBinaryCode => {
   if (mnemonic === null) {
     return "000";
   }
@@ -18,7 +18,7 @@ export const dest = (mnemonic: DestMnemonics | null): DestBinaryCode => {
   return `${ABit}${DBit}${MBit}`;
 };
 
-export const jump = (mnemonic: JumpMnemonics | null): JumpBinaryCode => {
+export const codeJump = (mnemonic: JumpMnemonics | null): JumpBinaryCode => {
   if (mnemonic === null) {
     return "000";
   }
@@ -40,7 +40,7 @@ export const jump = (mnemonic: JumpMnemonics | null): JumpBinaryCode => {
   }
 };
 
-export const comp = (mnemonic: CompMnemonics): CompBinaryCode => {
+export const codeComp = (mnemonic: CompMnemonics): CompBinaryCode => {
   const mnemonicToBinaryMap: Map<CompMnemonics, CompBinaryCode> = new Map([
     ["0", "0101010"],
     ["1", "0111111"],
