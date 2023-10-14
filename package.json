@@ -11,7 +11,8 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "build": "rm -rf ./lib && tsc",
-    "bin": "npm run build && node lib/index.js"
+    "bin": "npm run build && node lib/index.js",
+    "test": "mocha"
   },
   "keywords": [
     "hack",
@@ -28,14 +29,17 @@
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "@types/mocha": "^10.0.2",
+    "assert": "^2.1.0",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.1"
   },
   "files": [
     "lib/**/*"
   ],
   "engines": {
-    "node": ">=20",
-    "npm": ">=10"
+    "node": ">=20"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^11.0.0",
